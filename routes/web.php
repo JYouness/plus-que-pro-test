@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Foundation\Application;
+use App\Http\Controllers\Dashboard\MoviesController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,21 +16,25 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+// Public Routes
+Route::get('/', [PagesController::class, 'index'])->name('home');
+Route::get('/movies/{movie}', [PagesController::class, 'showMovie'])->name('public.movies.show');
 
+// Dashboard Routes
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+])->prefix('dashboard')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::prefix('movies')->name('dashboard.movies.')->controller(MoviesController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{movie}', 'show')->name('show');
+        Route::get('/{movie}/edit', 'edit')->name('edit');
+        Route::put('/{movie}/update', 'update')->name('update');
+        Route::delete('/{movie}', 'destroy')->name('delete');
+    });
 });
