@@ -7,15 +7,64 @@
 Ce demo project utilise Laravel Sail & Docker.
 Pour plus d'information, visiter la [documentation officielle](https://laravel.com/docs/sail#docker-installation-using-sail) de Laravel
 
+### Stack
+
+* PHP / Laravel
+* Inertia
+* Vue.js
+* Tailwindcss
+
 ### Installation
 
 Cloner le projet sur votre machine locale.
 
-Et ensuite, lancer cette commande:
+Dupliquer le fichier `.env.example` avec le nom `.env` et copier le token de TMDB API dans la clé `TMBD_TOKEN`
+
+```dotenv
+###...
+
+TMBD_TOKEN=<Placer API Token ici>
+```
+
+Et ensuite, lancer cette commande pour installer les dépendances (composer) de Laravel:
+
+```shell
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v $(pwd):/var/www/html \
+    -w /var/www/html \
+    laravelsail/php83-composer:latest \
+    composer install --ignore-platform-reqs
+```
+
+Après que les dépendances soient installées, lancer Laravel Sail avec cette commande:
 
 ```shell
 ./vendor/bin/sail up -d
 ```
+
+Une fois que les containers sont démarrés, lancer ces commandes pour finaliser l'installtion:
+
+```shell
+./vendor/bin/sail artisan key:generate
+./vendor/bin/sail artisan migrate:fresh --seed
+./vendor/bin/sail artisan sync:trending-movies
+./vendor/bin/sail yarn install
+./vendor/bin/sail yarn build
+```
+
+Et voila 🎉, vous pouvez visiter la demo sur http://localhost/
+
+### Les identifiants / mot de passe pour la connexion si besoin
+
+Il y a une page pour se authentifier au `dashboard` en visitant le lien http://localhost/login:
+
+```
+Email: john@example.com
+Password: password
+```
+
+Ces identiants sont générés par un seeder, vous pouvez toujours créer un nouveau utilisateur en visitant le lien http://localhost/register
 
 ### Packages
 
