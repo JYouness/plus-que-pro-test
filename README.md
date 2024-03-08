@@ -88,3 +88,5 @@ php artisan sync:trending-movies
 * Inertia: https://inertiajs.com/
 * Tailwindcss: https://tailwindcss.com/ 
 * Flowbite: https://flowbite.com/
+* ESLint: https://eslint.org/
+* Prettier: https://prettier.io/
