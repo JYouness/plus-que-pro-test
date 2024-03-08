@@ -38,10 +38,18 @@ class SyncTrendingMovies extends Command
             Movie::query()->delete();
 
             // Import the new movies records
+            $bar = $this->getOutput()->createProgressBar($pages);
+            $bar->start();
+
             foreach (range(1, $pages) as $page) {
                 $response = $api->getTrendingMovies(page: $page);
                 $this->importMovies($response['results']);
+
+                $bar->advance();
             }
+
+            $bar->finish();
+            $this->newLine();
 
             return true;
         });
