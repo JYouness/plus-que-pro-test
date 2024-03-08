@@ -5,7 +5,7 @@
 #### Prérequis
 
 Ce demo project utilise Laravel Sail & Docker.
-Pour plus d'information, visiter la [documentation officielle](https://laravel.com/docs/sail#docker-installation-using-sail) de Laravel
+Pour plus d'information, visiter la [documentation officielle](https://laravel.com/docs/installation#docker-installation-using-sail) de Laravel
 
 ### Stack
 
@@ -18,11 +18,10 @@ Pour plus d'information, visiter la [documentation officielle](https://laravel.c
 
 Cloner le projet sur votre machine locale.
 
-Dupliquer le fichier `.env.example` avec le nom `.env` et copier le token de TMDB API dans la clé `TMBD_TOKEN`
+Dupliquer le fichier `.env.example` avec le nom `.env` et copier le token de TMDB API vers la clé `TMBD_TOKEN`
 
 ```dotenv
 ###...
-
 TMBD_TOKEN=<Placer API Token ici>
 ```
 
@@ -66,6 +65,16 @@ Password: password
 
 Ces identiants sont générés par un seeder, vous pouvez toujours créer un nouveau utilisateur en visitant le lien http://localhost/register
 
+### Synchronisation des films en tendances
+
+Pour lancer la synchronisation manuellement, utiliser la commande:
+
+```shell
+php artisan sync:trending-movies
+```
+
+> **Note:** Cette commande se lance automatiquement en daily vers 00:00 (minuit) grâce à Laravel [Task Scheduling](https://laravel.com/docs/scheduling)
+
 ### Packages
 
 * Jetstream: https://jetstream.laravel.com/introduction.html
@@ -74,6 +83,7 @@ Ces identiants sont générés par un seeder, vous pouvez toujours créer un nou
 
 ### Documentation & Sites
 
+* Laravel: https://laravel.com/docs
 * Vue.js: https://vuejs.org/guide/introduction
 * Inertia: https://inertiajs.com/
 * Tailwindcss: https://tailwindcss.com/ 
