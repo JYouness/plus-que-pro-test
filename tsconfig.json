@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "target": "esnext",
         "module": "esnext",
         "moduleResolution": "node",
@@ -16,7 +17,10 @@
         },
         "outDir": "./public/build/assets"
     },
-    "typeRoots": ["./node_modules/@types", "resources/js/types"],
+    "typeRoots": [
+        "./node_modules/@types",
+        "resources/js/types"
+    ],
     "include": [
         "resources/js/**/*.ts",
         "resources/js/**/*.d.ts",
