@@ -14,8 +14,8 @@ use Illuminate\Support\Carbon;
  * @property string $title
  * @property string $original_title
  * @property string $original_language
- * @property string $backdrop_path
- * @property string $poster_path
+ * @property string|null $backdrop_path
+ * @property string|null $poster_path
  * @property array $genre_ids
  * @property Carbon $release_date
  * @property string $overview
@@ -83,7 +83,7 @@ class Movie extends Model
     protected function backdropUrl(): Attribute
     {
         return Attribute::make(
-            get: fn (): string => "https://image.tmdb.org/t/p/w500/{$this->backdrop_path}",
+            get: fn (): string => static::getImageUrl($this->backdrop_path),
         );
     }
 
@@ -93,7 +93,12 @@ class Movie extends Model
     protected function posterUrl(): Attribute
     {
         return Attribute::make(
-            get: fn (): string => "https://image.tmdb.org/t/p/w500/{$this->poster_path}",
+            get: fn (): string => static::getImageUrl($this->poster_path),
         );
+    }
+
+    private static function getImageUrl(?string $path): string
+    {
+        return $path ? "https://image.tmdb.org/t/p/w500/{$path}" : url('assets/svg/default.svg');
     }
 }

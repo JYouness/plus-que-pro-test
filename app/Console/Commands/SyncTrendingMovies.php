@@ -68,7 +68,7 @@ class SyncTrendingMovies extends Command
 
                 return $item;
             })
-            ->each(function($item) use ($query): void {
+            ->each(function ($item) use ($query): void {
                 $query->create($item);
             });
     }

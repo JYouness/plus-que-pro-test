@@ -18,16 +18,16 @@ return new class extends Migration
             $table->string('title');
             $table->string('original_title');
             $table->string('original_language');
-            $table->string('backdrop_path', 50);
-            $table->string('poster_path', 50);
+            $table->string('backdrop_path', 50)->nullable();
+            $table->string('poster_path', 50)->nullable();
             $table->json('genre_ids');
             $table->date('release_date');
             $table->text('overview');
-            $table->boolean('video');
-            $table->boolean('adult');
-            $table->decimal('popularity', 8, 3);
-            $table->decimal('vote_average', 5, 3);
-            $table->integer('vote_count');
+            $table->boolean('video')->default(false);
+            $table->boolean('adult')->default(false);
+            $table->decimal('popularity', 8, 3)->default(0);
+            $table->decimal('vote_average', 5, 3)->default(0);
+            $table->integer('vote_count')->default(0);
             $table->timestamps();
         });
     }
