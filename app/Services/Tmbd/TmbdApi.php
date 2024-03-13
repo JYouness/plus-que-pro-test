@@ -33,4 +33,14 @@ class TmbdApi
 
         return $response->json();
     }
+
+    public function getMovieGenres(
+        string $language = 'en-US'
+    ): array {
+        $response = $this->client->get('/genre/movie/list', [
+            'language' => $language,
+        ]);
+
+        return $response->json();
+    }
 }

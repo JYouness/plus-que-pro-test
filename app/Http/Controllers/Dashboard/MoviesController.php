@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Requests\Movies\CreateMovieRequest;
 use App\Http\Requests\Movies\UpdateMovieRequest;
+use App\Http\Resources\MovieGenreResource;
 use App\Http\Resources\MovieResource;
 use App\Models\Movie;
+use App\Models\MovieGenre;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,17 +21,21 @@ class MoviesController
      */
     public function index(Request $request): InertiaResponse
     {
+        $genre = $request->query('movie_genre', '');
         $term = $request->query('term');
+
         $movies = Movie::query()
-            ->when(fn (Builder $query): Builder => $query->whereAny([
-                'title',
-                'original_title',
-            ], 'LIKE', '%'.$term.'%'))
+            ->when(is_numeric($genre), fn (Builder $q): Builder => $q->searchByGenre((int) $genre))
+            ->unless(empty($term), fn (Builder $q): Builder => $q->searchByTerm($term))
             ->paginate(12)
-            ->appends(compact('term'));
+            ->appends(['movie_genre' => $genre, 'term' => $term]);
+
+        $genres = MovieGenre::query()->has('movies')->get();
 
         return Inertia::render('Dashboard/Movies/Index', [
             'movies' => MovieResource::collection($movies),
+            'genres' => MovieGenreResource::collection($genres),
+            'movie_genre' => $genre,
             'term' => $term,
         ]);
     }
@@ -39,8 +45,10 @@ class MoviesController
      */
     public function show(Movie $movie): InertiaResponse
     {
+        $movie->load(['genres']);
+
         return Inertia::render('Dashboard/Movies/Show', [
-            'movie' => $movie,
+            'movie' => new MovieResource($movie),
         ]);
     }
 
@@ -49,9 +57,11 @@ class MoviesController
      */
     public function create(): InertiaResponse
     {
+        $genres = MovieGenre::query()->get();
         $languages = $this->getMovieLanguages();
 
         return Inertia::render('Dashboard/Movies/Create', [
+            'genres' => MovieGenreResource::collection($genres),
             'languages' => $languages,
         ]);
     }
@@ -68,7 +78,6 @@ class MoviesController
             'tmbd_id' => rand(10000, 99999),
             'original_title' => $request->get('original_title') ?: $request->get('title'),
             'media_type' => 'movie',
-            'genre_ids' => [],
         ]);
 
         $movie = Movie::query()->create($data);
@@ -83,10 +92,13 @@ class MoviesController
      */
     public function edit(Movie $movie): InertiaResponse
     {
+        $movie->load('genres');
+        $genres = MovieGenre::query()->get();
         $languages = $this->getMovieLanguages();
 
         return Inertia::render('Dashboard/Movies/Edit', [
-            'movie' => $movie,
+            'movie' => new MovieResource($movie),
+            'genres' => MovieGenreResource::collection($genres),
             'languages' => $languages,
         ]);
     }

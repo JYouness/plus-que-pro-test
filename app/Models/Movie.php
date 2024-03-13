@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
+use Staudenmeir\EloquentJsonRelations\HasJsonRelationships;
+use Staudenmeir\EloquentJsonRelations\Relations\BelongsToJson;
 
 /**
  * @property-read int $id
@@ -28,10 +31,12 @@ use Illuminate\Support\Carbon;
  * @property Carbon $updated_at
  * @property-read string $backdrop_url
  * @property-read string $poster_url
+ * * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MovieGenre> $genres
  */
 class Movie extends Model
 {
     use HasFactory;
+    use HasJsonRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -81,6 +86,33 @@ class Movie extends Model
         'backdrop_url',
         'poster_url',
     ];
+
+    /**
+     * Scope a query to search by a given genre.
+     */
+    protected function scopeSearchByGenre(Builder $query, int $genreId): Builder
+    {
+        return $query->whereJsonContains('genre_ids', $genreId);
+    }
+
+    /**
+     * Scope a query to search by a given term.
+     */
+    public function scopeSearchByTerm(Builder $query, string $term): Builder
+    {
+        return $query->whereAny([
+            'title',
+            'original_title',
+        ], 'LIKE', "%{$term}%");
+    }
+
+    /**
+     * Get the movie's genres relationship.
+     */
+    public function genres(): BelongsToJson
+    {
+        return $this->belongsToJson(MovieGenre::class, 'genre_ids', 'tmbd_id');
+    }
 
     /**
      * Get the movie's backdrop URL.

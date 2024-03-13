@@ -65,12 +65,16 @@ Password: password
 
 Ces identiants sont générés par un seeder, vous pouvez toujours créer un nouveau utilisateur en visitant le lien http://localhost/register
 
-### Synchronisation des films en tendances
+### Synchronisation des films en tendances et leur catégories
 
-Pour lancer la synchronisation manuellement, utiliser la commande:
+Pour lancer la synchronisation manuellement, utiliser ces commandes:
 
 ```shell
+# Films en tendances
 php artisan sync:trending-movies
+
+# Les catégories des films
+php artisan sync:movie-genres
 ```
 
 > **Note:** Cette commande se lance automatiquement en daily vers 00:00 (minuit) grâce à Laravel [Task Scheduling](https://laravel.com/docs/scheduling)
@@ -80,6 +84,7 @@ php artisan sync:trending-movies
 * Jetstream: https://jetstream.laravel.com/introduction.html
 * Laravel Pint: https://laravel.com/docs/pint
 * Laravel Debugbar : https://github.com/barryvdh/laravel-debugbar
+* Eloquent JSON Relations: https://github.com/staudenmeir/eloquent-json-relations
 
 ### Documentation & Sites
 
