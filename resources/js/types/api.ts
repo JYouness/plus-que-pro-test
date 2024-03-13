@@ -4,8 +4,11 @@ export type PaginatedLink = {
     active: boolean
 }
 
-export type PaginatedApiResponse<T> = {
+export type CollectionApiResponse<T> = {
     data: T[]
+}
+
+export type PaginatedApiResponse<T> = CollectionApiResponse<T> & {
     meta: {
         current_page: Number
         from: Number

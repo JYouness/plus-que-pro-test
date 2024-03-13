@@ -2,10 +2,11 @@
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { useForm } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
-import { Movie } from '@/types/movie'
+import { MovieGenre } from '@/types/movie'
+import { CollectionApiResponse } from '@/types/api'
 
 defineProps<{
-    movie: Movie
+    genres: CollectionApiResponse<MovieGenre>
     languages: Record<string, string>
 }>()
 
@@ -14,7 +15,8 @@ const form = useForm({
     original_title: '',
     overview: '',
     original_language: '',
-    release_date: ''
+    release_date: '',
+    genre_ids: []
 })
 
 const submit = (): void => {
@@ -95,6 +97,41 @@ const submit = (): void => {
                                             v-if="form.errors.original_title"
                                             class="text-sm text-red-500"
                                             v-text="form.errors.original_title"
+                                        ></span>
+                                    </div>
+
+                                    <div class="md:col-span-5">
+                                        <h3
+                                            class="mb-4 font-semibold text-gray-900 dark:text-white"
+                                        >
+                                            Genres
+                                        </h3>
+
+                                        <div class="grid grid-cols-4 gap-3">
+                                            <div
+                                                v-for="genre in genres.data"
+                                                :key="genre.id"
+                                                class=""
+                                            >
+                                                <input
+                                                    :id="`genre[${genre.id}]`"
+                                                    v-model="form.genre_ids"
+                                                    type="checkbox"
+                                                    :value="genre.tmbd_id"
+                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                />
+                                                <label
+                                                    :for="`genre[${genre.id}]`"
+                                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                    >{{ genre.name }}</label
+                                                >
+                                            </div>
+                                        </div>
+
+                                        <span
+                                            v-if="form.errors.genre_ids"
+                                            class="mt-4 inline-block text-sm text-red-500"
+                                            v-text="form.errors.genre_ids"
                                         ></span>
                                     </div>
 

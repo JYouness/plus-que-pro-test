@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import { toRefs } from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
-import { Movie } from '@/types/movie'
+import { Movie, MovieGenre } from '@/types/movie'
 import { useForm } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
+import { CollectionApiResponse } from '@/types/api'
 
 const props = defineProps<{
-    movie: Movie
+    movie: { data: Movie }
+    genres: CollectionApiResponse<MovieGenre>
     languages: Record<string, string>
 }>()
-
-const { movie } = toRefs(props)
 
 const formatDate = (value: string): string => {
     return new Date(value)
@@ -25,11 +24,12 @@ const formatDate = (value: string): string => {
 }
 
 const form = useForm({
-    title: movie?.value?.title,
-    original_title: movie?.value?.original_title,
-    overview: movie?.value?.overview,
-    original_language: movie?.value?.original_language,
-    release_date: formatDate(movie?.value?.release_date || '')
+    title: props.movie.data.title,
+    original_title: props.movie.data.original_title,
+    overview: props.movie.data.overview,
+    original_language: props.movie.data.original_language,
+    release_date: formatDate(props.movie.data.release_date || ''),
+    genre_ids: props.movie.data.genre_ids
 })
 
 const submit = (): void => {
@@ -37,17 +37,17 @@ const submit = (): void => {
 
     form.clearErrors()
 
-    form.put(route('dashboard.movies.update', { movie: movie?.value?.id }))
+    form.put(route('dashboard.movies.update', { movie: props.movie.data.id }))
 }
 </script>
 
 <template>
-    <AppLayout :title="movie.title">
+    <AppLayout :title="movie.data.title">
         <template #header>
             <h2
                 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight"
             >
-                Edit Movie: {{ movie.title }}
+                Edit Movie: {{ movie.data.title }}
             </h2>
         </template>
 
@@ -110,6 +110,41 @@ const submit = (): void => {
                                             v-if="form.errors.original_title"
                                             class="text-sm text-red-500"
                                             v-text="form.errors.original_title"
+                                        ></span>
+                                    </div>
+
+                                    <div class="md:col-span-5">
+                                        <h3
+                                            class="mb-4 font-semibold text-gray-900 dark:text-white"
+                                        >
+                                            Genres
+                                        </h3>
+
+                                        <div class="grid grid-cols-4 gap-3">
+                                            <div
+                                                v-for="genre in genres.data"
+                                                :key="genre.id"
+                                                class=""
+                                            >
+                                                <input
+                                                    :id="`genre[${genre.id}]`"
+                                                    v-model="form.genre_ids"
+                                                    type="checkbox"
+                                                    :value="genre.tmbd_id"
+                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                />
+                                                <label
+                                                    :for="`genre[${genre.id}]`"
+                                                    class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                    >{{ genre.name }}</label
+                                                >
+                                            </div>
+                                        </div>
+
+                                        <span
+                                            v-if="form.errors.genre_ids"
+                                            class="mt-4 inline-block text-sm text-red-500"
+                                            v-text="form.errors.genre_ids"
                                         ></span>
                                     </div>
 

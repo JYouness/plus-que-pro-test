@@ -27,8 +27,8 @@ defineProps<{
                     'cursor-pointer dark:text-white bg-gray-100 dark:bg-gray-900 hover:bg-white hover:text-black':
                         !link.active
                 }"
-                >{{ link.label }}</Link
-            >
+                v-html="link.label"
+            />
         </template>
     </nav>
 </template>

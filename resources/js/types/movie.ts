@@ -10,6 +10,7 @@ export type Movie = {
     poster_path: String
     poster_url: String
     genre_ids: Number[]
+    genres?: MovieGenre[]
     release_date: String
     overview: String
     video: Boolean
@@ -19,4 +20,10 @@ export type Movie = {
     vote_count: Number
     created_at: String
     updated_at: String
+}
+
+export type MovieGenre = {
+    id: String
+    tmbd_id: String
+    name: String
 }
