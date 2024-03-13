@@ -2,8 +2,8 @@
 defineProps({
     type: {
         type: String,
-        default: 'submit',
-    },
+        default: 'submit'
+    }
 })
 </script>
 

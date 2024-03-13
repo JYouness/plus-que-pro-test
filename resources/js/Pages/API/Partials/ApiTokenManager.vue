@@ -14,26 +14,28 @@ import PrimaryButton from '@/Components/PrimaryButton.vue'
 import SecondaryButton from '@/Components/SecondaryButton.vue'
 import SectionBorder from '@/Components/SectionBorder.vue'
 import TextInput from '@/Components/TextInput.vue'
+import { ApiToken } from '@/types/api-token'
+import { route } from 'ziggy-js'
 
-const props = defineProps({
-    tokens: Array,
-    availablePermissions: Array,
-    defaultPermissions: Array,
-})
+const props = defineProps<{
+    tokens: ApiToken[]
+    availablePermissions: String[]
+    defaultPermissions: String[]
+}>()
 
 const createApiTokenForm = useForm({
     name: '',
-    permissions: props.defaultPermissions,
+    permissions: props.defaultPermissions
 })
 
 const updateApiTokenForm = useForm({
-    permissions: [],
+    permissions: []
 })
 
 const deleteApiTokenForm = useForm({})
 
 const displayingToken = ref(false)
-const managingPermissionsFor = ref(null)
+const managingPermissionsFor = ref<ApiToken | null>(null)
 const apiTokenBeingDeleted = ref(null)
 
 const createApiToken = () => {
@@ -42,27 +44,29 @@ const createApiToken = () => {
         onSuccess: () => {
             displayingToken.value = true
             createApiTokenForm.reset()
-        },
+        }
     })
 }
 
-const manageApiTokenPermissions = (token) => {
+const manageApiTokenPermissions = (token: ApiToken) => {
     updateApiTokenForm.permissions = token.abilities
     managingPermissionsFor.value = token
 }
 
-const updateApiToken = () => {
+const updateApiToken = (): void => {
     updateApiTokenForm.put(
         route('api-tokens.update', managingPermissionsFor.value),
         {
             preserveScroll: true,
             preserveState: true,
-            onSuccess: () => (managingPermissionsFor.value = null),
+            onSuccess: (): void => {
+                managingPermissionsFor.value = null
+            }
         }
     )
 }
 
-const confirmApiTokenDeletion = (token) => {
+const confirmApiTokenDeletion = (token): void => {
     apiTokenBeingDeleted.value = token
 }
 
@@ -72,7 +76,9 @@ const deleteApiToken = () => {
         {
             preserveScroll: true,
             preserveState: true,
-            onSuccess: () => (apiTokenBeingDeleted.value = null),
+            onSuccess: (): void => {
+                apiTokenBeingDeleted.value = null
+            }
         }
     )
 }

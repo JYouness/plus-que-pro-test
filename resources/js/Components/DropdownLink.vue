@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
 
-defineProps({
-    href: String,
-    as: String,
-})
+defineProps<{
+    href: String
+    as: String
+}>()
 </script>
 
 <template>

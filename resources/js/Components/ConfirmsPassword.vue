@@ -6,36 +6,37 @@ import PrimaryButton from './PrimaryButton.vue'
 import SecondaryButton from './SecondaryButton.vue'
 import TextInput from './TextInput.vue'
 import { route } from 'ziggy-js'
+import { useHttp } from '@/plugins/http'
 
 const emit = defineEmits(['confirmed'])
 
 defineProps({
     title: {
         type: String,
-        default: 'Confirm Password',
+        default: 'Confirm Password'
     },
     content: {
         type: String,
-        default: 'For your security, please confirm your password to continue.',
+        default: 'For your security, please confirm your password to continue.'
     },
     button: {
         type: String,
-        default: 'Confirm',
-    },
+        default: 'Confirm'
+    }
 })
-
+const http = useHttp()
 const confirmingPassword = ref(false)
 
 const form = reactive({
     password: '',
     error: '',
-    processing: false,
+    processing: false
 })
 
 const passwordInput = ref(null)
 
 const startConfirmingPassword = () => {
-    axios.get(route('password.confirmation')).then((response) => {
+    http.get(route('password.confirmation')).then((response) => {
         if (response.data.confirmed) {
             emit('confirmed')
         } else {
@@ -49,10 +50,9 @@ const startConfirmingPassword = () => {
 const confirmPassword = () => {
     form.processing = true
 
-    axios
-        .post(route('password.confirm'), {
-            password: form.password,
-        })
+    http.post(route('password.confirm'), {
+        password: form.password
+    })
         .then(() => {
             form.processing = false
 

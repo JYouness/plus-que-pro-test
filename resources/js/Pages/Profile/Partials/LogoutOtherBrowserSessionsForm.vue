@@ -10,35 +10,50 @@ import SecondaryButton from '@/Components/SecondaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
 import { route } from 'ziggy-js'
 
-defineProps({
-    sessions: Array,
-})
+type Session = {
+    agent: {
+        platform: String
+        browser: String
+        is_desktop: Boolean
+    }
+    ip_address: String
+    is_current_device: Boolean
+    last_active: String
+}
+
+defineProps<{
+    sessions: Session[]
+}>()
 
 const confirmingLogout = ref(false)
 const passwordInput = ref(null)
 
 const form = useForm({
-    password: '',
+    password: ''
 })
 
-const confirmLogout = () => {
+const confirmLogout = (): void => {
     confirmingLogout.value = true
 
     setTimeout(() => passwordInput.value.focus(), 250)
 }
 
-const logoutOtherBrowserSessions = () => {
+const logoutOtherBrowserSessions = (): void => {
     form.delete(route('other-browser-sessions.destroy'), {
         preserveScroll: true,
-        onSuccess: () => closeModal(),
-        onError: () => passwordInput.value.focus(),
-        onFinish: () => {
-            form.reset()
+        onSuccess: (): void => {
+            closeModal()
         },
+        onError: (): void => {
+            passwordInput.value.focus()
+        },
+        onFinish: (): void => {
+            form.reset()
+        }
     })
 }
 
-const closeModal = () => {
+const closeModal = (): void => {
     confirmingLogout.value = false
 
     form.reset()

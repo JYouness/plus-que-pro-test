@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import { PropType } from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { useForm } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
 import { Movie } from '@/types/movie'
 
-defineProps({
-    movie: Object as PropType<Movie>,
-    languages: Object as PropType<Record<string, string>>,
-})
+defineProps<{
+    movie: Movie
+    languages: Record<string, string>
+}>()
 
 const form = useForm({
     title: '',
     original_title: '',
     overview: '',
     original_language: '',
-    release_date: '',
+    release_date: ''
 })
 
 const submit = (): void => {
@@ -137,6 +136,7 @@ const submit = (): void => {
                                                 v-for="(
                                                     language, key
                                                 ) in languages"
+                                                :key="key"
                                                 :value="key"
                                                 :selected="
                                                     form.original_language ===

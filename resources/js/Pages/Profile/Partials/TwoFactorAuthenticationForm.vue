@@ -9,11 +9,14 @@ import InputLabel from '@/Components/InputLabel.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import SecondaryButton from '@/Components/SecondaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
+import { useHttp } from '@/plugins/http'
+import { route } from 'ziggy-js'
 
 const props = defineProps({
-    requiresConfirmation: Boolean,
+    requiresConfirmation: Boolean
 })
 
+const http = useHttp()
 const page = usePage()
 const enabling = ref(false)
 const confirming = ref(false)
@@ -23,7 +26,7 @@ const setupKey = ref(null)
 const recoveryCodes = ref([])
 
 const confirmationForm = useForm({
-    code: '',
+    code: ''
 })
 
 const twoFactorEnabled = computed(
@@ -49,30 +52,30 @@ const enableTwoFactorAuthentication = () => {
                 Promise.all([
                     showQrCode(),
                     showSetupKey(),
-                    showRecoveryCodes(),
+                    showRecoveryCodes()
                 ]),
             onFinish: () => {
                 enabling.value = false
                 confirming.value = props.requiresConfirmation
-            },
+            }
         }
     )
 }
 
 const showQrCode = () => {
-    return axios.get(route('two-factor.qr-code')).then((response) => {
+    return http.get(route('two-factor.qr-code')).then((response) => {
         qrCode.value = response.data.svg
     })
 }
 
 const showSetupKey = () => {
-    return axios.get(route('two-factor.secret-key')).then((response) => {
+    return http.get(route('two-factor.secret-key')).then((response) => {
         setupKey.value = response.data.secretKey
     })
 }
 
 const showRecoveryCodes = () => {
-    return axios.get(route('two-factor.recovery-codes')).then((response) => {
+    return http.get(route('two-factor.recovery-codes')).then((response) => {
         recoveryCodes.value = response.data
     })
 }
@@ -86,14 +89,14 @@ const confirmTwoFactorAuthentication = () => {
             confirming.value = false
             qrCode.value = null
             setupKey.value = null
-        },
+        }
     })
 }
 
 const regenerateRecoveryCodes = () => {
-    axios
-        .post(route('two-factor.recovery-codes'))
-        .then(() => showRecoveryCodes())
+    http.post(route('two-factor.recovery-codes')).then(() =>
+        showRecoveryCodes()
+    )
 }
 
 const disableTwoFactorAuthentication = () => {
@@ -104,7 +107,7 @@ const disableTwoFactorAuthentication = () => {
         onSuccess: () => {
             disabling.value = false
             confirming.value = false
-        },
+        }
     })
 }
 </script>

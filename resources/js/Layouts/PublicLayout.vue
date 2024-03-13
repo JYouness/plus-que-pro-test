@@ -3,7 +3,10 @@ import { Head, Link } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
 
 defineProps({
-    title: String,
+    title: {
+        type: String,
+        required: true
+    }
 })
 </script>
 

@@ -13,7 +13,7 @@ const recovery = ref(false)
 
 const form = useForm({
     code: '',
-    recovery_code: '',
+    recovery_code: ''
 })
 
 const recoveryCodeInput = ref(null)

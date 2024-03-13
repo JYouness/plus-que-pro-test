@@ -1,7 +1,7 @@
 <script setup lang="ts">
-defineProps({
-    on: Boolean,
-})
+defineProps<{
+    on: Boolean
+}>()
 </script>
 
 <template>

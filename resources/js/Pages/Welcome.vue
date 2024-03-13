@@ -8,15 +8,27 @@ import PublicLayout from '@/Layouts/PublicLayout.vue'
 import { route } from 'ziggy-js'
 
 const props = defineProps({
-    laravelVersion: String,
-    phpVersion: String,
-    movies: Object as PropType<PaginatedApiResponse<Movie>>,
-    term: String,
+    laravelVersion: {
+        type: String,
+        required: true
+    },
+    phpVersion: {
+        type: String,
+        required: true
+    },
+    movies: {
+        type: Object as PropType<PaginatedApiResponse<Movie>>,
+        required: true
+    },
+    term: {
+        type: String,
+        required: true
+    }
 })
 
 const { term } = toRefs(props)
 const form = useForm({
-    term: term?.value,
+    term: term?.value
 })
 
 const search = (): void => {

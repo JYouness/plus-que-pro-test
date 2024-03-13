@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { type PropType, toRefs } from 'vue'
+import { toRefs } from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { Movie } from '@/types/movie'
 import { useForm } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
 
-const props = defineProps({
-    movie: Object as PropType<Movie>,
-    languages: Object as PropType<Record<string, string>>,
-})
+const props = defineProps<{
+    movie: Movie
+    languages: Record<string, string>
+}>()
 
 const { movie } = toRefs(props)
 
@@ -17,7 +17,7 @@ const formatDate = (value: string): string => {
         .toLocaleDateString('en-GB', {
             year: 'numeric',
             month: '2-digit',
-            day: '2-digit',
+            day: '2-digit'
         })
         .split('/')
         .reverse()
@@ -29,7 +29,7 @@ const form = useForm({
     original_title: movie?.value?.original_title,
     overview: movie?.value?.overview,
     original_language: movie?.value?.original_language,
-    release_date: formatDate(movie?.value?.release_date || ''),
+    release_date: formatDate(movie?.value?.release_date || '')
 })
 
 const submit = (): void => {
@@ -151,6 +151,7 @@ const submit = (): void => {
                                                 v-for="(
                                                     language, key
                                                 ) in languages"
+                                                :key="key"
                                                 :value="key"
                                                 :selected="
                                                     form.original_language ===

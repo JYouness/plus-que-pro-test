@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { type PropType } from 'vue'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import { Movie } from '@/types/movie'
 import { route } from 'ziggy-js'
 import { Link, router } from '@inertiajs/vue3'
 
-defineProps({
-    movie: Object as PropType<Movie>,
-})
+defineProps<{
+    movie: Movie
+}>()
 
 const deleteMovie = (movie: Movie) => {
     if (confirm(`Are you sure you want to delete "${movie.title}"?`)) {
         router.delete(
             route('dashboard.movies.show', {
-                movie: movie.id,
+                movie: movie.id
             })
         )
     }
@@ -84,7 +83,7 @@ const deleteMovie = (movie: Movie) => {
                         <Link
                             :href="
                                 route('dashboard.movies.edit', {
-                                    movie: movie.id,
+                                    movie: movie.id
                                 })
                             "
                             class="basis-full bg-gray-700 px-6 pb-2 pt-2.5 text-center text-xs font-medium uppercase leading-normal text-black dark:text-white transition duration-150 ease-in-out hover:bg-gray-800 focus:bg-gray-800 focus:outline-none focus:ring-0 active:bg-primary-600 motion-reduce:transition-none"

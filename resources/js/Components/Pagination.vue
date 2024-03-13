@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { type PropType } from 'vue'
-import { type PaginatedLink } from '@/types/api'
+import type { PaginatedLink } from '@/types/api'
 import { Link } from '@inertiajs/vue3'
-defineProps({
-    links: Array as PropType<PaginatedLink[]>,
-})
+
+defineProps<{
+    links: PaginatedLink[]
+}>()
 </script>
 
 <template>
@@ -25,10 +25,10 @@ defineProps({
                 :class="{
                     'bg-white dark:bg-gray-800 dark:text-white': link.active,
                     'cursor-pointer dark:text-white bg-gray-100 dark:bg-gray-900 hover:bg-white hover:text-black':
-                        !link.active,
+                        !link.active
                 }"
-                v-html="link.label"
-            />
+                >{{ link.label }}</Link
+            >
         </template>
     </nav>
 </template>

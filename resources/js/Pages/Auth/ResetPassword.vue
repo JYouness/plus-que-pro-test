@@ -8,23 +8,23 @@ import PrimaryButton from '@/Components/PrimaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
 import { route } from 'ziggy-js'
 
-const props = defineProps({
-    email: String,
-    token: String,
-})
+const props = defineProps<{
+    email: String
+    token: String
+}>()
 
 const form = useForm({
     token: props.token,
     email: props.email,
     password: '',
-    password_confirmation: '',
+    password_confirmation: ''
 })
 
 const submit = () => {
     form.post(route('password.update'), {
         onFinish: () => {
             form.reset('password', 'password_confirmation')
-        },
+        }
     })
 }
 </script>

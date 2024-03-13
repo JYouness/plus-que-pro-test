@@ -10,7 +10,7 @@ import TextInput from '@/Components/TextInput.vue'
 import { route } from 'ziggy-js'
 
 const form = useForm({
-    password: '',
+    password: ''
 })
 
 const passwordInput = ref(null)
@@ -21,7 +21,7 @@ const submit = () => {
             form.reset()
 
             passwordInput.value.focus()
-        },
+        }
     })
 }
 </script>

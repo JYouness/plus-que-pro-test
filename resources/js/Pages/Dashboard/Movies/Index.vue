@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { toRefs, type PropType } from 'vue'
+import { toRefs } from 'vue'
 import { Link, router, useForm } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 import Pagination from '@/Components/Pagination.vue'
@@ -7,14 +7,14 @@ import { PaginatedApiResponse } from '@/types/api'
 import { Movie } from '@/types/movie'
 import { route } from 'ziggy-js'
 
-const props = defineProps({
-    movies: Object as PropType<PaginatedApiResponse<Movie>>,
-    term: String,
-})
+const props = defineProps<{
+    movies: PaginatedApiResponse<Movie>
+    term: String
+}>()
 
 const { term } = toRefs(props)
 const form = useForm({
-    term: term?.value,
+    term: term?.value
 })
 
 const search = (): void => {
@@ -29,7 +29,7 @@ const deleteMovie = (movie: Movie) => {
     if (confirm(`Are you sure you want to delete "${movie.title}"?`)) {
         router.delete(
             route('dashboard.movies.show', {
-                movie: movie.id,
+                movie: movie.id
             })
         )
     }
@@ -112,7 +112,7 @@ const deleteMovie = (movie: Movie) => {
                         <Link
                             :href="
                                 route('dashboard.movies.show', {
-                                    movie: movie.id,
+                                    movie: movie.id
                                 })
                             "
                         >
@@ -136,7 +136,7 @@ const deleteMovie = (movie: Movie) => {
                             <Link
                                 :href="
                                     route('dashboard.movies.edit', {
-                                        movie: movie.id,
+                                        movie: movie.id
                                     })
                                 "
                                 class="basis-full bg-gray-700 px-6 pb-2 pt-2.5 text-center text-xs font-medium uppercase leading-normal text-black dark:text-white transition duration-150 ease-in-out hover:bg-gray-800 focus:bg-gray-800 focus:outline-none focus:ring-0 active:bg-primary-600 motion-reduce:transition-none"

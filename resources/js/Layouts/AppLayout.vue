@@ -7,26 +7,30 @@ import Dropdown from '@/Components/Dropdown.vue'
 import DropdownLink from '@/Components/DropdownLink.vue'
 import NavLink from '@/Components/NavLink.vue'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
+import { route } from 'ziggy-js'
 
 defineProps({
-    title: String,
+    title: {
+        type: String,
+        required: true
+    }
 })
 
 const showingNavigationDropdown = ref(false)
 
-const switchToTeam = (team) => {
+const switchToTeam = (team): void => {
     router.put(
         route('current-team.update'),
         {
-            team_id: team.id,
+            team_id: team.id
         },
         {
-            preserveState: false,
+            preserveState: false
         }
     )
 }
 
-const logout = () => {
+const logout = (): void => {
     router.post(route('logout'))
 }
 </script>
@@ -323,7 +327,7 @@ const logout = () => {
                                         :class="{
                                             hidden: showingNavigationDropdown,
                                             'inline-flex':
-                                                !showingNavigationDropdown,
+                                                !showingNavigationDropdown
                                         }"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
@@ -334,7 +338,7 @@ const logout = () => {
                                         :class="{
                                             hidden: !showingNavigationDropdown,
                                             'inline-flex':
-                                                showingNavigationDropdown,
+                                                showingNavigationDropdown
                                         }"
                                         stroke-linecap="round"
                                         stroke-linejoin="round"
@@ -351,7 +355,7 @@ const logout = () => {
                 <div
                     :class="{
                         block: showingNavigationDropdown,
-                        hidden: !showingNavigationDropdown,
+                        hidden: !showingNavigationDropdown
                     }"
                     class="sm:hidden"
                 >

@@ -6,16 +6,16 @@ const emit = defineEmits(['close'])
 defineProps({
     show: {
         type: Boolean,
-        default: false,
+        default: false
     },
     maxWidth: {
         type: String,
-        default: '2xl',
+        default: '2xl'
     },
     closeable: {
         type: Boolean,
-        default: true,
-    },
+        default: true
+    }
 })
 
 const close = () => {

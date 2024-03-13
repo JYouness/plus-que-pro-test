@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { PropType } from 'vue'
 import { Link } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue'
 
-defineProps({
-    stats: Object as PropType<{
+defineProps<{
+    stats: {
         movies: Number
-    }>,
-})
+    }
+}>()
 </script>
 
 <template>

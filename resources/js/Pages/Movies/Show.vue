@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { type PropType } from 'vue'
 import PublicLayout from '@/Layouts/PublicLayout.vue'
 import { Movie } from '@/types/movie'
 
-defineProps({
-    movie: Object as PropType<Movie>,
-})
+defineProps<{
+    movie: Movie
+}>()
 </script>
 
 <template>

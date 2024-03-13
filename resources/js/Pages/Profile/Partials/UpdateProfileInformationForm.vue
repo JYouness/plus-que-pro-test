@@ -10,20 +10,23 @@ import SecondaryButton from '@/Components/SecondaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
 import { route } from 'ziggy-js'
 
-const props = defineProps({
-    user: Object,
-})
+const props = defineProps<{
+    user: {
+        name: String
+        email: String
+    }
+}>()
 
 const form = useForm({
     _method: 'PUT',
     name: props.user.name,
     email: props.user.email,
-    photo: null,
+    photo: null
 })
 
 const verificationLinkSent = ref<boolean | null>(null)
 const photoPreview = ref(null)
-const photoInput = ref(null)
+const photoInput = ref<HTMLInputElement | null>(null)
 
 const updateProfileInformation = () => {
     if (photoInput.value) {
@@ -33,7 +36,7 @@ const updateProfileInformation = () => {
     form.post(route('user-profile-information.update'), {
         errorBag: 'updateProfileInformation',
         preserveScroll: true,
-        onSuccess: () => clearPhotoFileInput(),
+        onSuccess: () => clearPhotoFileInput()
     })
 }
 
@@ -65,7 +68,7 @@ const deletePhoto = () => {
         onSuccess: () => {
             photoPreview.value = null
             clearPhotoFileInput()
-        },
+        }
     })
 }
 

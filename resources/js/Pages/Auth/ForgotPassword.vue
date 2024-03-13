@@ -8,12 +8,12 @@ import PrimaryButton from '@/Components/PrimaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
 import { route } from 'ziggy-js'
 
-defineProps({
-    status: String,
-})
+defineProps<{
+    status: String
+}>()
 
 const form = useForm({
-    email: '',
+    email: ''
 })
 
 const submit = () => {

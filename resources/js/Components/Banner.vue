@@ -7,7 +7,7 @@ const show = ref(true)
 const style = ref('success')
 const message = ref('')
 
-watchEffect(async () => {
+watchEffect(async (): Promise<void> => {
     style.value = page.props.jetstream.flash?.bannerStyle || 'success'
     message.value = page.props.jetstream.flash?.banner || ''
     show.value = true
@@ -20,7 +20,7 @@ watchEffect(async () => {
             v-if="show && message"
             :class="{
                 'bg-indigo-500': style == 'success',
-                'bg-red-700': style == 'danger',
+                'bg-red-700': style == 'danger'
             }"
         >
             <div class="max-w-screen-xl mx-auto py-2 px-3 sm:px-6 lg:px-8">
@@ -30,7 +30,7 @@ watchEffect(async () => {
                             class="flex p-2 rounded-lg"
                             :class="{
                                 'bg-indigo-600': style == 'success',
-                                'bg-red-600': style == 'danger',
+                                'bg-red-600': style == 'danger'
                             }"
                         >
                             <svg
@@ -79,7 +79,7 @@ watchEffect(async () => {
                                 'hover:bg-indigo-600 focus:bg-indigo-600':
                                     style == 'success',
                                 'hover:bg-red-600 focus:bg-red-600':
-                                    style == 'danger',
+                                    style == 'danger'
                             }"
                             aria-label="Dismiss"
                             @click.prevent="show = false"

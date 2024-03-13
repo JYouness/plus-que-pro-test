@@ -6,9 +6,9 @@ import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import { route } from 'ziggy-js'
 
-const props = defineProps({
-    status: String,
-})
+const props = defineProps<{
+    status: String
+}>()
 
 const form = useForm({})
 

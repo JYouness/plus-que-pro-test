@@ -7,32 +7,33 @@ import DialogModal from '@/Components/DialogModal.vue'
 import InputError from '@/Components/InputError.vue'
 import SecondaryButton from '@/Components/SecondaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
+import { route } from 'ziggy-js'
 
 const confirmingUserDeletion = ref(false)
 const passwordInput = ref(null)
 
 const form = useForm({
-    password: '',
+    password: ''
 })
 
-const confirmUserDeletion = () => {
+const confirmUserDeletion = (): void => {
     confirmingUserDeletion.value = true
 
     setTimeout(() => passwordInput.value.focus(), 250)
 }
 
-const deleteUser = () => {
+const deleteUser = (): void => {
     form.delete(route('current-user.destroy'), {
         preserveScroll: true,
         onSuccess: () => closeModal(),
         onError: () => passwordInput.value.focus(),
         onFinish: () => {
             form.reset()
-        },
+        }
     })
 }
 
-const closeModal = () => {
+const closeModal = (): void => {
     confirmingUserDeletion.value = false
 
     form.reset()

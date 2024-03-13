@@ -4,16 +4,16 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 const props = defineProps({
     show: {
         type: Boolean,
-        default: false,
+        default: false
     },
     maxWidth: {
         type: String,
-        default: '2xl',
+        default: '2xl'
     },
     closeable: {
         type: Boolean,
-        default: true,
-    },
+        default: true
+    }
 })
 
 const emit = defineEmits(['close'])
@@ -62,7 +62,7 @@ const maxWidthClass = computed(() => {
         md: 'sm:max-w-md',
         lg: 'sm:max-w-lg',
         xl: 'sm:max-w-xl',
-        '2xl': 'sm:max-w-2xl',
+        '2xl': 'sm:max-w-2xl'
     }[props.maxWidth]
 })
 </script>
