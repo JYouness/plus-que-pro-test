@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
+use App\Contracts\TmbdApiContract;
 use App\Models\MovieGenre;
-use App\Services\Tmbd\TmbdApi;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class SyncMovieGenres extends Command
 {
@@ -25,8 +28,12 @@ class SyncMovieGenres extends Command
 
     /**
      * Execute the console command.
+     *
+     * @param TmbdApiContract $api
+     *
+     * @return int
      */
-    public function handle(TmbdApi $api): int
+    public function handle(TmbdApiContract $api): int
     {
         $this->comment('Syncing the movie genres...');
 
@@ -34,10 +41,16 @@ class SyncMovieGenres extends Command
             // Delete all the old movies records
             MovieGenre::query()->delete();
 
-            // Import the new movies records
-            $data = $api->getMovieGenres();
+            try {
+                // Import the new movies records
+                $data = $api->getMovieGenres();
 
-            $this->importMovieGenres($data['genres']);
+                $this->importMovieGenres($data['genres']);
+            } catch (Throwable) {
+                DB::rollBack();
+
+                return false;
+            }
 
             $this->newLine();
 
@@ -55,7 +68,12 @@ class SyncMovieGenres extends Command
         return static::FAILURE;
     }
 
-    private function importMovieGenres(array $genres)
+    /**
+     * Import the movie's genres.
+     *
+     * @param array $genres
+     */
+    private function importMovieGenres(array $genres): void
     {
         $query = MovieGenre::query();
 

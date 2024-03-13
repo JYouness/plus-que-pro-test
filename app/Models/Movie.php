@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -31,7 +33,7 @@ use Staudenmeir\EloquentJsonRelations\Relations\BelongsToJson;
  * @property Carbon $updated_at
  * @property-read string $backdrop_url
  * @property-read string $poster_url
- * * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MovieGenre> $genres
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MovieGenre> $genres
  */
 class Movie extends Model
 {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Resources\MovieGenreResource;
@@ -35,7 +37,7 @@ class PagesController
             'genres' => MovieGenreResource::collection($genres),
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
-            'movie_genre' => $genre,
+            'movieGenre' => $genre,
             'term' => $term,
         ]);
     }

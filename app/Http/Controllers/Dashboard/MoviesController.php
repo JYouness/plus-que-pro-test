@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Requests\Movies\CreateMovieRequest;
@@ -35,7 +37,7 @@ class MoviesController
         return Inertia::render('Dashboard/Movies/Index', [
             'movies' => MovieResource::collection($movies),
             'genres' => MovieGenreResource::collection($genres),
-            'movie_genre' => $genre,
+            'movieGenre' => $genre,
             'term' => $term,
         ]);
     }

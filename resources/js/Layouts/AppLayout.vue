@@ -9,12 +9,9 @@ import NavLink from '@/Components/NavLink.vue'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue'
 import { route } from 'ziggy-js'
 
-defineProps({
-    title: {
-        type: String,
-        required: true
-    }
-})
+defineProps<{
+    title: String
+}>()
 
 const showingNavigationDropdown = ref(false)
 
@@ -74,6 +71,14 @@ const logout = (): void => {
                                     "
                                 >
                                     Movies
+                                </NavLink>
+                                <NavLink
+                                    :href="route('dashboard.movie-genres.index')"
+                                    :active="
+                                        route().current('dashboard.movie-genres.*')
+                                    "
+                                >
+                                    Movie Genres
                                 </NavLink>
                             </div>
                         </div>

@@ -1,18 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\Tmbd;
 
+use App\Contracts\TmbdApiContract;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 
-class TmbdApi
+class TmbdApi implements TmbdApiContract
 {
+    private PendingRequest $client;
+
     /**
      * TMDB API constructor.
      */
-    public function __construct(
-        private PendingRequest $client
-    ) {
+    public function __construct()
+    {
         $this->client = Http::baseUrl('https://api.themoviedb.org/3')
             ->withToken(config('services.tmbd.token'))
             ->accept('application/json');
@@ -20,6 +24,12 @@ class TmbdApi
 
     /**
      * Get the trending movies.
+     *
+     * @param string $timeWindow
+     * @param int $page
+     * @param string $language
+     *
+     * @return array
      */
     public function getTrendingMovies(
         string $timeWindow = 'day',
@@ -34,6 +44,13 @@ class TmbdApi
         return $response->json();
     }
 
+    /**
+     * Get the movie genres.
+     *
+     * @param string $language
+     *
+     * @return array
+     */
     public function getMovieGenres(
         string $language = 'en-US'
     ): array {

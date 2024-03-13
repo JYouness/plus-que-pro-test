@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
+use App\Contracts\TmbdApiContract;
 use App\Models\Movie;
-use App\Services\Tmbd\TmbdApi;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class SyncTrendingMovies extends Command
 {
@@ -26,8 +29,12 @@ class SyncTrendingMovies extends Command
 
     /**
      * Execute the console command.
+     *
+     * @param TmbdApiContract $api
+     *
+     * @return int
      */
-    public function handle(TmbdApi $api): int
+    public function handle(TmbdApiContract $api): int
     {
         $this->comment('Syncing the trending movies...');
 
@@ -41,11 +48,17 @@ class SyncTrendingMovies extends Command
             $bar = $this->getOutput()->createProgressBar($pages);
             $bar->start();
 
-            foreach (range(1, $pages) as $page) {
-                $response = $api->getTrendingMovies(page: $page);
-                $this->importMovies($response['results']);
+            try {
+                foreach (range(1, $pages) as $page) {
+                    $response = $api->getTrendingMovies(page: $page);
+                    $this->importMovies($response['results']);
 
-                $bar->advance();
+                    $bar->advance();
+                }
+            } catch (Throwable) {
+                DB::rollBack();
+
+                return false;
             }
 
             $bar->finish();
@@ -65,7 +78,12 @@ class SyncTrendingMovies extends Command
         return static::FAILURE;
     }
 
-    private function importMovies($movies): void
+    /**
+     * Import the movies.
+     *
+     * @param array $movies
+     */
+    private function importMovies(array $movies): void
     {
         $query = Movie::query();
 
