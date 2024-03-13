@@ -12,13 +12,13 @@ const props = defineProps<{
     phpVersion: String
     movies: PaginatedApiResponse<Movie>
     genres: CollectionApiResponse<MovieGenre>
-    movie_genre: String
+    movieGenre: String
     term: String
 }>()
 
-const { term, movie_genre } = toRefs(props)
+const { term, movieGenre } = toRefs(props)
 const form = useForm({
-    movie_genre: movie_genre?.value,
+    movie_genre: movieGenre?.value,
     term: term?.value
 })
 

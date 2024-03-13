@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\MovieGenresController;
 use App\Http\Controllers\Dashboard\MoviesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PagesController;
@@ -36,5 +37,9 @@ Route::middleware([
         Route::get('/{movie}/edit', 'edit')->name('edit');
         Route::put('/{movie}/update', 'update')->name('update');
         Route::delete('/{movie}', 'destroy')->name('delete');
+    });
+
+    Route::prefix('movie-genres')->name('dashboard.movie-genres.')->controller(MovieGenresController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
     });
 });

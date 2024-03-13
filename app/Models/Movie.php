@@ -64,7 +64,7 @@ class Movie extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $casts = [
         'tmbd_id' => 'integer',
@@ -80,7 +80,7 @@ class Movie extends Model
     /**
      * The accessors to append to the model's array form.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $appends = [
         'backdrop_url',

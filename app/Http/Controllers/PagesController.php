@@ -10,14 +10,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
+use Inertia\Response as InertiaResponse;
 
 class PagesController
 {
     /**
      * Display a listing of the movies.
      */
-    public function index(Request $request): Response
+    public function index(Request $request): InertiaResponse
     {
         $genre = $request->query('movie_genre', '');
         $term = $request->query('term');
@@ -43,7 +43,7 @@ class PagesController
     /**
      * Show the details page for the specified movie.
      */
-    public function showMovie(Movie $movie): Response
+    public function showMovie(Movie $movie): InertiaResponse
     {
         $movie->load(['genres']);
 

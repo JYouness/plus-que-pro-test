@@ -33,7 +33,7 @@ class MovieGenre extends Model
     /**
      * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, mixed>
      */
     protected $casts = [
         'tmbd_id' => 'integer',

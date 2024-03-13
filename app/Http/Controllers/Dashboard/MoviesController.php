@@ -137,7 +137,7 @@ class MoviesController
     /**
      * Get the movie's languages.
      *
-     * @return string[]
+     * @return array<string, string>
      */
     private function getMovieLanguages(): array
     {

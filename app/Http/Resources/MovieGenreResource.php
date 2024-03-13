@@ -21,6 +21,7 @@ class MovieGenreResource extends JsonResource
             'id' => $this->id,
             'tmbd_id' => $this->tmbd_id,
             'name' => $this->name,
+            'movies_count' => $this->whenCounted('movies'),
         ];
     }
 }

@@ -26,4 +26,5 @@ export type MovieGenre = {
     id: String
     tmbd_id: String
     name: String
+    movies_count?: Number
 }
