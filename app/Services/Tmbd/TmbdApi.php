@@ -7,20 +7,25 @@ use Illuminate\Support\Facades\Http;
 
 class TmbdApi
 {
-    private PendingRequest $client;
-
-    public function __construct()
-    {
+    /**
+     * TMDB API constructor.
+     */
+    public function __construct(
+        private PendingRequest $client
+    ) {
         $this->client = Http::baseUrl('https://api.themoviedb.org/3')
             ->withToken(config('services.tmbd.token'))
             ->accept('application/json');
     }
 
+    /**
+     * Get the trending movies.
+     */
     public function getTrendingMovies(
         string $timeWindow = 'day',
         int $page = 1,
         string $language = 'en-US'
-    ) {
+    ): array {
         $response = $this->client->get("/trending/movie/{$timeWindow}", [
             'page' => $page,
             'language' => $language,

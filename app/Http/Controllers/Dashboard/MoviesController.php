@@ -14,6 +14,9 @@ use Inertia\Response as InertiaResponse;
 
 class MoviesController
 {
+    /**
+     * Display a listing of the movies.
+     */
     public function index(Request $request): InertiaResponse
     {
         $term = $request->query('term');
@@ -31,6 +34,9 @@ class MoviesController
         ]);
     }
 
+    /**
+     * Show the details page for the specified movie.
+     */
     public function show(Movie $movie): InertiaResponse
     {
         return Inertia::render('Dashboard/Movies/Show', [
@@ -38,6 +44,9 @@ class MoviesController
         ]);
     }
 
+    /**
+     * Show the form for creating a new movie.
+     */
     public function create(): InertiaResponse
     {
         $languages = $this->getMovieLanguages();
@@ -47,6 +56,9 @@ class MoviesController
         ]);
     }
 
+    /**
+     * Store a newly created movie.
+     */
     public function store(CreateMovieRequest $request): RedirectResponse
     {
         sleep(1); // Just to simulate the processing time
@@ -66,6 +78,9 @@ class MoviesController
             ->with('message', 'New movie added successfully!');
     }
 
+    /**
+     * Show the form for editing the specified movie.
+     */
     public function edit(Movie $movie): InertiaResponse
     {
         $languages = $this->getMovieLanguages();
@@ -76,6 +91,9 @@ class MoviesController
         ]);
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(UpdateMovieRequest $request, Movie $movie): RedirectResponse
     {
         sleep(1); // Just to simulate the processing time
@@ -92,6 +110,9 @@ class MoviesController
             ->with('message', 'Movie updated successfully!');
     }
 
+    /**
+     * Delete the specified movie.
+     */
     public function destroy(Movie $movie): RedirectResponse
     {
         $movie->delete();
@@ -101,6 +122,11 @@ class MoviesController
             ->with('message', 'Movie deleted successfully!');
     }
 
+    /**
+     * Get the movie's languages.
+     *
+     * @return string[]
+     */
     private function getMovieLanguages(): array
     {
         return [

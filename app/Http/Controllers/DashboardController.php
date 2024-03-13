@@ -8,10 +8,11 @@ use Inertia\Response;
 
 class DashboardController
 {
+    /**
+     * Display a listing of the movies.
+     */
     public function index(): Response
     {
-        $movies = Movie::query()->paginate(5);
-
         return Inertia::render('Dashboard/Index', [
             'stats' => [
                 'movies' => Movie::query()->count(),

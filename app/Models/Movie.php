@@ -72,6 +72,11 @@ class Movie extends Model
         'vote_count' => 'integer',
     ];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
     protected $appends = [
         'backdrop_url',
         'poster_url',
@@ -97,6 +102,9 @@ class Movie extends Model
         );
     }
 
+    /**
+     * Get the image URL.
+     */
     private static function getImageUrl(?string $path): string
     {
         return $path ? "https://image.tmdb.org/t/p/w500/{$path}" : url('assets/svg/default.svg');

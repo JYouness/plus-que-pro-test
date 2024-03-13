@@ -12,6 +12,9 @@ use Inertia\Response;
 
 class PagesController
 {
+    /**
+     * Display a listing of the movies.
+     */
     public function index(Request $request): Response
     {
         $term = $request->query('term');
@@ -31,6 +34,9 @@ class PagesController
         ]);
     }
 
+    /**
+     * Show the details page for the specified movie.
+     */
     public function showMovie(Movie $movie): Response
     {
         return Inertia::render('Movies/Show', [
