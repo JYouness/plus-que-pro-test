@@ -47,6 +47,7 @@ Une fois que les containers sont démarrés, lancer ces commandes pour finaliser
 ```shell
 ./vendor/bin/sail artisan key:generate
 ./vendor/bin/sail artisan migrate:fresh --seed
+./vendor/bin/sail artisan sync:movie-genres
 ./vendor/bin/sail artisan sync:trending-movies
 ./vendor/bin/sail yarn install
 ./vendor/bin/sail yarn build
@@ -77,7 +78,7 @@ php artisan sync:trending-movies
 php artisan sync:movie-genres
 ```
 
-> **Note:** Cette commande se lance automatiquement en daily vers 00:00 (minuit) grâce à Laravel [Task Scheduling](https://laravel.com/docs/scheduling)
+> **Note:** Les commandes artisan se lance automatiquement en `daily` vers 00:00 (minuit) grâce à Laravel [Task Scheduling](https://laravel.com/docs/scheduling)
 
 ### Packages
 

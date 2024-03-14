@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console;
 
-use App\Console\Commands\SyncTrendingMovies;
+use App\Console\Commands\{SyncMovieGenres, SyncTrendingMovies};
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -12,10 +12,13 @@ class Kernel extends ConsoleKernel
 {
     /**
      * Define the application's command schedule.
+     *
+     * @param Schedule $schedule
      */
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command(SyncMovieGenres::class)->dailyAt('00:00');
         $schedule->command(SyncTrendingMovies::class)->dailyAt('00:00');
     }
 
