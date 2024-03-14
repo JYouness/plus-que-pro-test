@@ -31,9 +31,9 @@ class MovieFactory extends Factory
             'overview' => $this->faker->paragraphs(asText: true),
             'video' => $this->faker->boolean(),
             'adult' => $this->faker->boolean(),
-            'popularity' => 0,
-            'vote_average' => 0,
-            'vote_count' => 0,
+            'popularity' => $this->faker->randomFloat(max: 100),
+            'vote_average' => $this->faker->randomFloat(max: 100),
+            'vote_count' => $this->faker->randomDigit(),
         ];
     }
 }
