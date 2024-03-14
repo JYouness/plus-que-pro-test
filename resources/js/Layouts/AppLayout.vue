@@ -73,9 +73,13 @@ const logout = (): void => {
                                     Movies
                                 </NavLink>
                                 <NavLink
-                                    :href="route('dashboard.movie-genres.index')"
+                                    :href="
+                                        route('dashboard.movie-genres.index')
+                                    "
                                     :active="
-                                        route().current('dashboard.movie-genres.*')
+                                        route().current(
+                                            'dashboard.movie-genres.*'
+                                        )
                                     "
                                 >
                                     Movie Genres

@@ -13,6 +13,8 @@ class DashboardController
 {
     /**
      * Display a listing of the movies.
+     *
+     * @return InertiaResponse
      */
     public function index(): InertiaResponse
     {

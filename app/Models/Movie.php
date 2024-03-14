@@ -14,23 +14,23 @@ use Staudenmeir\EloquentJsonRelations\Relations\BelongsToJson;
 
 /**
  * @property-read int $id
- * @property int $tmbd_id
- * @property string $media_type
- * @property string $title
- * @property string $original_title
- * @property string $original_language
+ * @property int         $tmbd_id
+ * @property string      $media_type
+ * @property string      $title
+ * @property string      $original_title
+ * @property string      $original_language
  * @property string|null $backdrop_path
  * @property string|null $poster_path
- * @property array $genre_ids
- * @property Carbon $release_date
- * @property string $overview
- * @property bool $video
- * @property bool $adult
- * @property float $popularity
- * @property float $vote_average
- * @property float $vote_count
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property array       $genre_ids
+ * @property Carbon      $release_date
+ * @property string      $overview
+ * @property bool        $video
+ * @property bool        $adult
+ * @property float       $popularity
+ * @property float       $vote_average
+ * @property float       $vote_count
+ * @property Carbon      $created_at
+ * @property Carbon      $updated_at
  * @property-read string $backdrop_url
  * @property-read string $poster_url
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MovieGenre> $genres
@@ -91,6 +91,11 @@ class Movie extends Model
 
     /**
      * Scope a query to search by a given genre.
+     *
+     * @param Builder $query
+     * @param int     $genreId
+     *
+     * @return Builder
      */
     protected function scopeSearchByGenre(Builder $query, int $genreId): Builder
     {
@@ -99,6 +104,11 @@ class Movie extends Model
 
     /**
      * Scope a query to search by a given term.
+     *
+     * @param Builder $query
+     * @param string  $term
+     *
+     * @return Builder
      */
     public function scopeSearchByTerm(Builder $query, string $term): Builder
     {
@@ -110,6 +120,8 @@ class Movie extends Model
 
     /**
      * Get the movie's genres relationship.
+     *
+     * @return BelongsToJson
      */
     public function genres(): BelongsToJson
     {
@@ -118,6 +130,8 @@ class Movie extends Model
 
     /**
      * Get the movie's backdrop URL.
+     *
+     * @return Attribute
      */
     protected function backdropUrl(): Attribute
     {
@@ -128,6 +142,8 @@ class Movie extends Model
 
     /**
      * Get the movie's poster URL.
+     *
+     * @return Attribute
      */
     protected function posterUrl(): Attribute
     {
@@ -138,6 +154,10 @@ class Movie extends Model
 
     /**
      * Get the image URL.
+     *
+     * @param ?string $path
+     *
+     * @return string
      */
     private static function getImageUrl(?string $path): string
     {

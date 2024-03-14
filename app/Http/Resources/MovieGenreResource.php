@@ -16,6 +16,8 @@ class MovieGenreResource extends JsonResource
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
+     *
+     * @param Request $request
      */
     public function toArray(Request $request): array
     {

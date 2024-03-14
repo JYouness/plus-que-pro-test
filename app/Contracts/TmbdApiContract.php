@@ -10,7 +10,7 @@ interface TmbdApiContract
      * Get the trending movies.
      *
      * @param string $timeWindow
-     * @param int $page
+     * @param int    $page
      * @param string $language
      *
      * @return array

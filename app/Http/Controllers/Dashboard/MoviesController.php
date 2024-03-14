@@ -20,6 +20,10 @@ class MoviesController
 {
     /**
      * Display a listing of the movies.
+     *
+     * @param Request $request
+     *
+     * @return InertiaResponse
      */
     public function index(Request $request): InertiaResponse
     {
@@ -44,6 +48,8 @@ class MoviesController
 
     /**
      * Show the details page for the specified movie.
+     *
+     * @param Movie $movie
      */
     public function show(Movie $movie): InertiaResponse
     {
@@ -70,6 +76,8 @@ class MoviesController
 
     /**
      * Store a newly created movie.
+     *
+     * @param CreateMovieRequest $request
      */
     public function store(CreateMovieRequest $request): RedirectResponse
     {
@@ -91,6 +99,8 @@ class MoviesController
 
     /**
      * Show the form for editing the specified movie.
+     *
+     * @param Movie $movie
      */
     public function edit(Movie $movie): InertiaResponse
     {
@@ -107,6 +117,9 @@ class MoviesController
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param UpdateMovieRequest $request
+     * @param Movie              $movie
      */
     public function update(UpdateMovieRequest $request, Movie $movie): RedirectResponse
     {
@@ -126,6 +139,8 @@ class MoviesController
 
     /**
      * Delete the specified movie.
+     *
+     * @param Movie $movie
      */
     public function destroy(Movie $movie): RedirectResponse
     {

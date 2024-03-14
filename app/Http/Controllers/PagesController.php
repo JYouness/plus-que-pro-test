@@ -18,6 +18,10 @@ class PagesController
 {
     /**
      * Display a listing of the movies.
+     *
+     * @param Request $request
+     *
+     * @return InertiaResponse
      */
     public function index(Request $request): InertiaResponse
     {
@@ -44,6 +48,10 @@ class PagesController
 
     /**
      * Show the details page for the specified movie.
+     *
+     * @param Movie $movie
+     *
+     * @return InertiaResponse
      */
     public function showMovie(Movie $movie): InertiaResponse
     {

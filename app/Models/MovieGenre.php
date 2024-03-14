@@ -11,8 +11,8 @@ use Staudenmeir\EloquentJsonRelations\Relations\HasManyJson;
 
 /**
  * @property-read int $id
- * @property int $tmbd_id
- * @property string $name
+ * @property int                        $tmbd_id
+ * @property string                     $name
  * @property \Illuminate\Support\Carbon $created_at
  * @property \Illuminate\Support\Carbon $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Movie> $movies
@@ -43,6 +43,8 @@ class MovieGenre extends Model
 
     /**
      * Get the movie's genres relationship.
+     *
+     * @return HasManyJson
      */
     public function movies(): HasManyJson
     {
